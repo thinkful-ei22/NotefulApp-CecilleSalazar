@@ -16,8 +16,10 @@ const app = express();
 
 app.use(express.static('public'));
 
-app.get('/api/notes', (req, res) => {
-  res.json(data);
+app.get('/api/notes/:id', (req, res) => {
+  const id = req.params.id;
+  const answer = data.find(item => item.id === Number(id));
+  res.json(answer);
 });
 
 app.listen(8080, function () {
