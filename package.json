@@ -9,7 +9,10 @@
   },
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
