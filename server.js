@@ -20,6 +20,21 @@ app.get('/api/notes/:id', (req, res) => {
   const id = req.params.id;
   const answer = data.find(item => item.id === Number(id));
   res.json(answer);
+
+});
+
+app.get('/api/notes', (req, res) => {
+  const query = req.query;
+  const searchTerm = query.searchTerm;
+  if (!searchTerm){
+    return res.json(data);
+  }
+  const result = data.filter(item=>{
+    if (item.title.includes(searchTerm)||item.content.includes(searchTerm)){
+      return item;
+    }
+  });
+  res.json(result);
 });
 
 app.listen(8080, function () {
