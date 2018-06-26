@@ -23,11 +23,15 @@ const testLogger = require('./middleware/logger')
 
 app.use(express.static('public'));
 
-app.get('/api/notes/:id', (req, res) => {
-  const id = req.params.id;
-  const answer = data.find(item => item.id === Number(id));
-  res.json(answer);
+app.get('/api/notes/:id', (req, res, next) => {
+  const { id } = req.params;
 
+  notes.find(id, (err, item) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(item);
+  });
 });
 
 app.use(testLogger);
