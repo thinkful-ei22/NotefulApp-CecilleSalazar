@@ -14,6 +14,8 @@ const app = express();
 
 const { PORT } = require('./config');
 
+const testLogger = require('./middleware/logger')
+
 // ADD STATIC SERVER HERE
 
 app.use(express.static('public'));
@@ -24,6 +26,8 @@ app.get('/api/notes/:id', (req, res) => {
   res.json(answer);
 
 });
+
+app.use(testLogger);
 
 app.get('/api/notes', (req, res) => {
   const query = req.query;
