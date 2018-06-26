@@ -10,6 +10,11 @@ const express = require('express');
 
 const data = require('./db/notes');
 
+// Simple In-Memory Database
+const data = require('./db/notes');
+const simDB = require('./db/simDB');  // <<== add this
+const notes = simDB.initialize(data); // <<== and this
+
 const app = express();
 
 const { PORT } = require('./config');
