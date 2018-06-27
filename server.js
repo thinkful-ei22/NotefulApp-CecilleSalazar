@@ -28,7 +28,7 @@ app.use(express.static('public'));
 
 app.use(express.json());
 
-app.use('/api/notes', noteRouter);
+app.use('/api', noteRouter);
 
 // app.put('/api/notes/:id', (req, res, next) => {
 //   const id = req.params.id;
