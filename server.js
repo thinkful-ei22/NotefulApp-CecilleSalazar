@@ -7,6 +7,7 @@ console.log('Hello Noteful!');
 // INSERT EXPRESS APP CODE HERE...
 
 const express = require('express');
+const morgan = require('morgan');
 
 // Simple In-Memory Database
 const data = require('./db/notes');
@@ -17,7 +18,8 @@ const app = express();
 
 const { PORT } = require('./config');
 
-const testLogger = require('./middleware/logger')
+//Commenting out testLogger - we are now on morgan
+//const testLogger = require('./middleware/logger')
 
 // ADD STATIC SERVER HERE
 
@@ -61,7 +63,9 @@ app.get('/api/notes/:id', (req, res, next) => {
   });
 });
 
-app.use(testLogger);
+//No longer using testLogger - now using morgan
+//app.use(testLogger);
+app.use(morgan('dev'))
 
 app.get('/api/notes', (req, res, next) => {
   const { searchTerm } = req.query;
