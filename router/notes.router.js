@@ -47,11 +47,8 @@ router.post('/notes', (req, res, next) => {
       if (item) {
         res.location(`http://${req.headers.host}/notes/${item.id}`).status(201).json(item);
       }
-      next();
     })
-    .catch(err => {
-      return next(err);
-    });
+    .catch(err => next(err));
 });
 
 //Successfully Converted and Tested
