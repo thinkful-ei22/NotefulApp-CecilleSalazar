@@ -4,6 +4,7 @@ const data = require('../db/notes');
 const simDB = require('../db/simDB');  // <<== add this
 const notes = simDB.initialize(data); // <<== and this
 
+//Successfully Converted and Tested
 router.put('/notes/:id', (req, res, next) => {
   const id = req.params.id;
 
@@ -17,16 +18,16 @@ router.put('/notes/:id', (req, res, next) => {
     }
   });
 
-  notes.update(id, updateObj, (err, item) => {
-    if (err) {
-      return next(err);
-    }
-    if (item) {
-      res.json(item);
-    } else {
+  notes.update(id, updateObj)
+    .then(item => {
+      if (item) {
+        res.json(item);
+      }
       next();
-    }
-  });
+    })
+    .catch(err => {
+      next(err);
+    })
 });
 
 //Successfully Converted and Tested!
@@ -53,18 +54,7 @@ router.post('/notes', (req, res, next) => {
     });
 });
 
-//Delete Works??? Let's Comment this all out and refactor and see.
-// router.delete('/notes/:id', (req, res, next) => {
-//   const id = req.params.id;
-//
-//   notes.delete(id, (err) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.sendStatus(204);
-//   });
-// });
-
+//Successfully Converted and Tested
 router.delete('/notes/:id', (req, res, next) => {
   const id = req.params.id;
 
@@ -73,12 +63,6 @@ router.delete('/notes/:id', (req, res, next) => {
     .catch(err => {
       next(err)
     });
-  // (id, (err) => {
-  //   if (err) {
-  //     return next(err);
-  //   }
-  //   res.sendStatus(204);
-  // });
 });
 
 //Successfully Converted and Tested
