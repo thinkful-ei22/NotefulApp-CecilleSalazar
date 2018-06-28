@@ -29,6 +29,7 @@ router.put('/notes/:id', (req, res, next) => {
   });
 });
 
+//Successfully Converted and Tested!
 router.post('/notes', (req, res, next) => {
   const { title, content } = req.body;
 
@@ -63,6 +64,7 @@ router.delete('/notes/:id', (req, res) => {
   });
 })
 
+//Successfully Converted and Tested
 router.get('/notes/:id', (req, res, next) => {
   const { id } = req.params;
 
@@ -82,15 +84,15 @@ router.get('/notes/:id', (req, res, next) => {
 //app.use(testLogger);
 //app.use(morgan('dev'))
 
+//Successfully Converted and Tested
 router.get('/notes', (req, res, next) => {
   const { searchTerm } = req.query;
 
-  notes.filter(searchTerm, (err, list) => {
-    if (err) {
-      return next(err); // goes to error handler
-    }
-    res.json(list); // responds with filtered array
-  });
+  notes.filter(searchTerm)
+    .then(notes => res.json(notes))
+    .catch(err => {
+      next(err)
+    });
 });
 
 router.get('/boom', (req, res, next) => {
