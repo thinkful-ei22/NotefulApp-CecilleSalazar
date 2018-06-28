@@ -66,12 +66,16 @@ router.delete('/notes/:id', (req, res) => {
 router.get('/notes/:id', (req, res, next) => {
   const { id } = req.params;
 
-  notes.find(id, (err, item) => {
-    if (err) {
-      return next(err);
-    }
-    res.json(item);
-  });
+  notes.find(id)
+    .then(item => {
+      if (item) {
+        res.json(item);
+      }
+      next();
+    })
+    .catch(err => {
+      next(err)
+    });
 });
 
 //No longer using testLogger - now using morgan
