@@ -53,16 +53,33 @@ router.post('/notes', (req, res, next) => {
     });
 });
 
-router.delete('/notes/:id', (req, res) => {
-  const { id } = req.params;
+//Delete Works??? Let's Comment this all out and refactor and see.
+// router.delete('/notes/:id', (req, res, next) => {
+//   const id = req.params.id;
+//
+//   notes.delete(id, (err) => {
+//     if (err) {
+//       return next(err);
+//     }
+//     res.sendStatus(204);
+//   });
+// });
 
-  notes.delete(id, (err) => {
-    if (err) {
-      return next(err);
-    }
-    res.status(204).end();
-  });
-})
+router.delete('/notes/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  notes.delete(id)
+    .then(item => res.sendStatus(204))
+    .catch(err => {
+      next(err)
+    });
+  // (id, (err) => {
+  //   if (err) {
+  //     return next(err);
+  //   }
+  //   res.sendStatus(204);
+  // });
+});
 
 //Successfully Converted and Tested
 router.get('/notes/:id', (req, res, next) => {
