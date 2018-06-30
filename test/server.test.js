@@ -184,15 +184,15 @@ describe('PUT api/notes/:id', function() {
   })
 })
 
-describe('DELETE api/notes/:id', function() {
-  it ('should delete note on DELETE', function() {
-    return chai.request(app)
-    .delete('api/notes/1001')
-    .then(function(res) {
-      expect(res).to.have.status(204);
-    })
+describe('DELETE  /api/notes/:id', function () {
+    it('should delete an item by id', function () {
+      return chai.request(app)
+        .delete('/api/notes/1002')
+        .then(function (res) {
+          expect(res).to.have.status(204);
+        });
+    });
 
   });
-})
 
 //Change to trigger New Build for Heroku/Travis CI
