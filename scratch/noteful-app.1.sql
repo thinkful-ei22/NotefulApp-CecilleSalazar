@@ -1,3 +1,5 @@
+DROP TABLE notes;
+
 SELECT CURRENT_DATE;
 
 CREATE TABLE notes(
@@ -6,6 +8,8 @@ CREATE TABLE notes(
   content text,
   created timestamp DEFAULT now()
 );
+
+ALTER SEQUENCE notes_id_seq RESTART WITH 1000;
 
 INSERT INTO notes
   (title, content)
