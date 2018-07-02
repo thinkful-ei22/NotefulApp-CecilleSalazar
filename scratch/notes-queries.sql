@@ -1,0 +1,20 @@
+-- Different Queries
+-- SELECT * FROM notes;
+-- SELECT * FROM notes LIMIT 5;
+-- SELECT title FROM notes ORDER BY title ASC;
+-- SELECT title FROM notes ORDER BY title DESC;
+-- SELECT title FROM notes WHERE title = '7 things lady gaga has in common with cats';
+-- SELECT title FROM notes WHERE title::text LIKE '%ways%';
+-- UPDATE notes
+--   SET title = '5 life lessons learned by dogs'
+--   WHERE id = 1;
+-- UPDATE notes
+--   SET content = 'TEST CONTENT'
+--   WHERE id = 1;
+-- INSERT INTO notes
+--   (title, content)
+--   VALUES
+--   ('testNoteTitle',
+--     'testNoteContent'
+--   );
+-- DELETE FROM notes WHERE id = 11;
