@@ -1,48 +1,49 @@
+'use strict'
 
 const app = require('../server');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-// describe('Reality check', function () {
-//
-//   it('true should be true', function () {
-//     expect(true).to.be.true;
-//   });
-//
-//   it('2 + 2 should equal 4', function () {
-//     expect(2 + 2).to.equal(4);
-//   });
-// });
-//
-// describe('Express static', function () {
-//
-//   it('GET request "/" should return the index page', function () {
-//     return chai.request(app)
-//       .get('/')
-//       .then(function (res) {
-//         expect(res).to.exist;
-//         expect(res).to.have.status(200);
-//         expect(res).to.be.html;
-//       });
-//   });
-// });
-//
-// describe('404 handler', function () {
-//
-//   it('should respond with 404 when given a bad path', function () {
-//     return chai.request(app)
-//       .get('/DOES/NOT/EXIST')
-//       .then(res => {
-//         expect(res).to.have.status(404);
-//       });
-//   });
-// });
+// Default Tests to Run - SUCCESS
+describe('Reality check', function () {
+  it('true should be true', function () {
+    expect(true).to.be.true;
+  });
 
-describe('GET request should return all notes', function() {
+  it('2 + 2 should equal 4', function () {
+    expect(2 + 2).to.equal(4);
+  });
+});
+
+//Second Set of Default Tests for Static Server & 404 - SUCCESS
+describe('Express Static Server', function () {
+  it('GET request "/" should return the index page', function () {
+    return chai.request(app)
+      .get('/')
+      .then(function (res) {
+        expect(res).to.exist;
+        expect(res).to.have.status(200);
+        expect(res).to.be.html;
+      });
+  });
+});
+
+describe('404 handler', function () {
+  it('should respond with 404 when given a bad path', function () {
+    return chai.request(app)
+      .get('/DOES/NOT/EXIST')
+      .catch(err => err.response)
+      .then(res => {
+        expect(res).to.have.status(404);
+      });
+  });
+});
+
+//GET-ALL - SUCCESS
+describe('GET api/notes', function() {
   it ('should return 10 default notes as an array', function() {
     return chai.request(app)
       .get('/api/notes')
@@ -93,6 +94,7 @@ describe('GET request should return all notes', function() {
     })
 })
 
+//GET-ID - SUCCESS
 describe('GET api/notes/:id', function() {
   it ('should return correct note object with id, title and content for a given id', function() {
     return chai.request(app)
@@ -117,9 +119,10 @@ describe('GET api/notes/:id', function() {
     });
 })
 
+//POST ID - SUCCESS
 describe('POST api/notes', function() {
   it ('should create and return a new item with location header when provided valid data', function() {
-    const newNote = { title: 'Why do cats eat grass?', content: 'Posuere sollicitudin aliquam ultrices sagittis orci a.'}
+    const newNote = { 'title': 'Why do cats eat grass?', 'content': 'Posuere sollicitudin aliquam ultrices sagittis orci a.'}
     return chai.request(app)
       .post('/api/notes')
       .send(newNote)
@@ -136,7 +139,7 @@ describe('POST api/notes', function() {
   })
 
   it('should return an error when missing "title" field', function() {
-    const missingTitle = {content: 'Posuere sollicitudin aliquam ultrices sagittis orci a.'}
+    const missingTitle = {'content': 'Posuere sollicitudin aliquam ultrices sagittis orci a.'}
     return chai.request(app)
       .post('/api/notes')
       .send(missingTitle)
@@ -150,20 +153,22 @@ describe('POST api/notes', function() {
     })
 })
 
+//PUT-ID - SUCCESS
 describe('PUT api/notes/:id', function() {
   it ('should update and return a note object when given valid data', function() {
     const updatedNote = {
       'title': 'Top 20 Easy Cat Tricks',
-      'content': 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.'}
+      'content': 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.'
+    }
     return chai.request(app)
-    .put('/api/notes/1000')
+    .put('/api/notes/1001')
     .send(updatedNote)
     .then(function(res) {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
         expect(res.body).to.include.keys('id', 'title', 'content');
-        expect(res.body.id).to.equal(1000);
+        expect(res.body.id).to.equal(1001);
         expect(res.body.title).to.equal(updatedNote.title);
         expect(res.body.content).to.equal(updatedNote.content);
     })
@@ -184,7 +189,8 @@ describe('PUT api/notes/:id', function() {
   })
 })
 
-describe('DELETE  /api/notes/:id', function () {
+//DELETE ID - SUCCESS
+describe('DELETE /api/notes/:id', function () {
     it('should delete an item by id', function () {
       return chai.request(app)
         .delete('/api/notes/1002')
